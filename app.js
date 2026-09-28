@@ -4,7 +4,13 @@ const screens = {
   result: document.getElementById("result-screen"),
 };
 
+const DIFFICULTIES = [
+  { key: "medium", label: "Medium" },
+  { key: "hard", label: "Svær" },
+];
+
 const el = {
+  difficultyList: document.getElementById("difficulty-list"),
   categoryList: document.getElementById("category-list"),
   categoryName: document.getElementById("category-name"),
   progress: document.getElementById("progress"),
@@ -19,6 +25,7 @@ const el = {
 };
 
 let state = null;
+let difficulty = "medium";
 
 function shuffle(array) {
   const copy = [...array];
@@ -35,11 +42,31 @@ function showScreen(name) {
   }
 }
 
+function renderDifficulties() {
+  el.difficultyList.innerHTML = "";
+  for (const level of DIFFICULTIES) {
+    const btn = document.createElement("button");
+    btn.textContent = level.label;
+    btn.setAttribute("aria-pressed", level.key === difficulty);
+    btn.addEventListener("click", () => {
+      difficulty = level.key;
+      renderDifficulties();
+      renderCategories();
+    });
+    el.difficultyList.appendChild(btn);
+  }
+}
+
+function difficultyLabel(key) {
+  return DIFFICULTIES.find((level) => level.key === key).label;
+}
+
 function renderCategories() {
   el.categoryList.innerHTML = "";
   CATEGORIES.forEach((category, index) => {
     const btn = document.createElement("button");
-    btn.textContent = `${category.icon}  ${category.name}`;
+    const count = category[difficulty].length;
+    btn.textContent = `${category.icon}  ${category.name} · ${count} spørgsmål`;
     btn.addEventListener("click", () => startQuiz(index));
     el.categoryList.appendChild(btn);
   });
@@ -49,11 +76,11 @@ function startQuiz(categoryIndex) {
   const category = CATEGORIES[categoryIndex];
   state = {
     categoryIndex,
-    questions: shuffle(category.questions),
+    questions: shuffle(category[difficulty]),
     current: 0,
     score: 0,
   };
-  el.categoryName.textContent = `${category.icon} ${category.name}`;
+  el.categoryName.textContent = `${category.icon} ${category.name} · ${difficultyLabel(difficulty)}`;
   showScreen("quiz");
   renderQuestion();
 }
@@ -122,4 +149,5 @@ el.nextBtn.addEventListener("click", nextQuestion);
 el.retryBtn.addEventListener("click", () => startQuiz(state.categoryIndex));
 el.menuBtn.addEventListener("click", () => showScreen("start"));
 
+renderDifficulties();
 renderCategories();
