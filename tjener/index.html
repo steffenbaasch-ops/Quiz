@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tjenerquiz</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <main class="card">
+    <!-- Kategorivalg -->
+    <section id="start-screen">
+      <h1>Tjenerquiz</h1>
+      <p class="subtitle">Vælg en kategori inden for tjenerfaget</p>
+      <div id="difficulty-list" class="difficulty-list" role="group" aria-label="Sværhedsgrad"></div>
+      <div id="category-list" class="category-list"></div>
+    </section>
+
+    <!-- Spørgsmål -->
+    <section id="quiz-screen" hidden>
+      <div class="quiz-header">
+        <span id="category-name"></span>
+        <span id="progress"></span>
+      </div>
+      <div class="progress-bar"><div id="progress-fill"></div></div>
+      <h2 id="question"></h2>
+      <div id="answers" class="answers"></div>
+      <button id="next-btn" class="primary" hidden>Næste</button>
+    </section>
+
+    <!-- Resultat -->
+    <section id="result-screen" hidden>
+      <h1>Færdig!</h1>
+      <p id="score" class="score"></p>
+      <p id="score-message"></p>
+      <div class="result-actions">
+        <button id="retry-btn" class="primary">Prøv igen</button>
+        <button id="menu-btn">Vælg ny kategori</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="questions.js"></script>
+  <script src="../app.js"></script>
+</body>
+</html>

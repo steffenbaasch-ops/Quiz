@@ -19,3 +19,9 @@ og du får med det samme at vide, om du svarede rigtigt. Til sidst vises din sco
 
 Alle spørgsmål ligger i `questions.js`, fordelt på `medium` og `hard` i hver kategori. Det første svar i `answers` er altid det korrekte –
 rækkefølgen blandes automatisk, når spørgsmålet vises.
+
+## Tjenerquiz
+
+I mappen `tjener/` ligger en ekstra quiz om tjenerfaget i Danmark med 5 kategorier og 10 spørgsmål i hver:
+Vin, Borddækning & servering, Mad & menubegreber, Øl, spiritus & kaffe samt Hygiejne & regler.
+Åbn `tjener/index.html` for at spille. Den bruger samme spilkode og design som hovedquizzen.

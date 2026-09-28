@@ -4,10 +4,11 @@ const screens = {
   result: document.getElementById("result-screen"),
 };
 
+// Kun sværhedsgrader, som quizzens spørgsmål faktisk har, vises.
 const DIFFICULTIES = [
   { key: "medium", label: "Medium" },
   { key: "hard", label: "Svær" },
-];
+].filter((level) => CATEGORIES.every((category) => category[level.key]));
 
 const el = {
   difficultyList: document.getElementById("difficulty-list"),
@@ -25,7 +26,7 @@ const el = {
 };
 
 let state = null;
-let difficulty = "medium";
+let difficulty = DIFFICULTIES[0].key;
 
 function shuffle(array) {
   const copy = [...array];
@@ -43,6 +44,7 @@ function showScreen(name) {
 }
 
 function renderDifficulties() {
+  el.difficultyList.hidden = DIFFICULTIES.length < 2;
   el.difficultyList.innerHTML = "";
   for (const level of DIFFICULTIES) {
     const btn = document.createElement("button");
