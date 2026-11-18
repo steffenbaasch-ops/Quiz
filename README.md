@@ -52,3 +52,22 @@ Siden kan **ikke** åbnes direkte som fil, fordi Spotify-login kræver http(s).
 
 Sangene ligger i `musik-songs.js` med kunstner, titel og årstal. Spotify-numrene findes automatisk
 via søgning (og huskes i browseren). Rammer søgningen forkert, kan du angive en egen `query`.
+
+## 🥊 Hiphop-duellen (2 spillere + quizmaster)
+
+`duel.html` er et multiplayer-spil med **30 spørgsmål** om dansk 🇩🇰 og amerikansk 🇺🇸 hiphop fra
+**80'erne, 90'erne og 00'erne**. Musikken afspilles via Spotify, og hvert spørgsmål har 4 svarmuligheder.
+
+- **2 spillere** dyster mod hinanden – de siger deres svar højt.
+- **1 quizmaster** sidder ved skærmen, afspiller musikken og trykker spillernes svar ind.
+- Tryk **Afslør svaret** – rigtigt svar giver 1 point. Til sidst kåres vinderen med en gennemgang af alle numre.
+
+Ingen opsætning eller login nødvendig – åbn bare `duel.html` i en browser. Afspilleren er Spotifys
+indlejrede afspiller (skjult, så titlen ikke afslører svaret). Er quizmasteren logget ind på
+open.spotify.com i samme browser, spilles hele numre – ellers et 30 sekunders uddrag. Man kan også
+trykke “Åbn i Spotify” og spille nummeret på telefon/højttaler.
+
+Tastatur for quizmasteren: Spiller 1 = `1`–`4`, Spiller 2 = `7`–`0`, `Mellemrum` = afspil/pause,
+`Enter` = afslør / næste. Spillet gemmes løbende, så det kan fortsættes efter en genindlæsning.
+
+Spørgsmålene ligger i `duel-questions.js` (første svarmulighed er altid den rigtige).
