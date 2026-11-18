@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiphop-duellen</title>
+  <link rel="stylesheet" href="duel.css">
+</head>
+<body>
+  <!-- Opsætning -->
+  <section id="setup-screen" class="screen">
+    <div class="setup-card">
+      <h1 class="logo">Hiphop<span>duellen</span></h1>
+      <p class="subtitle">🇩🇰 🇺🇸 · 80'erne · 90'erne · 00'erne · 30 numre fra Spotify</p>
+
+      <div class="name-grid">
+        <label class="name-field p1">
+          <span>Spiller 1</span>
+          <input id="name-p1" type="text" maxlength="20" placeholder="Spiller 1" autocomplete="off">
+        </label>
+        <div class="vs">VS</div>
+        <label class="name-field p2">
+          <span>Spiller 2</span>
+          <input id="name-p2" type="text" maxlength="20" placeholder="Spiller 2" autocomplete="off">
+        </label>
+      </div>
+
+      <label class="name-field host">
+        <span>🎛️ Quizmaster (styrer spillet og taster svarene ind)</span>
+        <input id="name-host" type="text" maxlength="20" placeholder="Quizmaster" autocomplete="off">
+      </label>
+
+      <label class="check"><input id="opt-shuffle" type="checkbox" checked> Bland rækkefølgen af numrene</label>
+
+      <div class="setup-actions">
+        <button id="start-btn" class="btn primary big">Start duellen 🎤</button>
+        <button id="resume-btn" class="btn ghost" hidden>Fortsæt sidste spil</button>
+      </div>
+
+      <details class="howto">
+        <summary>Sådan spiller I</summary>
+        <ol>
+          <li><b>Quizmasteren</b> sidder ved skærmen og trykker <b>▶ Afspil</b>. Musikken spilles via Spotify.</li>
+          <li>Quizmasteren læser spørgsmålet og de 4 svarmuligheder højt (eller vender skærmen mod spillerne).</li>
+          <li>De to spillere siger deres svar – quizmasteren taster dem ind under hver spillers navn.</li>
+          <li>Tryk <b>Afslør svaret</b>. Rigtigt svar = 1 point. Efter 30 numre vinder den med flest point.</li>
+        </ol>
+        <p class="hint">Tastatur: Spiller 1 = <kbd>1</kbd>–<kbd>4</kbd>, Spiller 2 = <kbd>7</kbd>–<kbd>0</kbd>,
+          <kbd>Mellemrum</kbd> = afspil/pause, <kbd>Enter</kbd> = afslør / næste.</p>
+        <p class="hint">Spotify: Er du logget ind på <a href="https://open.spotify.com" target="_blank" rel="noopener">open.spotify.com</a>
+          i samme browser, spilles hele numre – ellers et 30 sekunders uddrag. Du kan også trykke
+          “Åbn i Spotify” og spille nummeret på din telefon/højttaler.</p>
+      </details>
+      <p class="center"><a href="index.html" class="back">← Tilbage til forsiden</a></p>
+    </div>
+  </section>
+
+  <!-- Spil -->
+  <section id="game-screen" class="screen" hidden>
+    <header class="scoreboard">
+      <div class="score-card p1"><span class="score-name" id="sb-name-p1"></span><span class="score-num" id="sb-score-p1">0</span></div>
+      <div class="round-info">
+        <span id="round-label">1 / 30</span>
+        <div class="progress"><div id="progress-fill"></div></div>
+      </div>
+      <div class="score-card p2"><span class="score-name" id="sb-name-p2"></span><span class="score-num" id="sb-score-p2">0</span></div>
+    </header>
+
+    <div class="stage">
+      <div class="tags">
+        <span id="tag-country" class="tag"></span>
+        <span id="tag-decade" class="tag"></span>
+      </div>
+
+      <div class="player-box">
+        <div id="equalizer" class="equalizer"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="player-buttons">
+          <button id="play-btn" class="btn play">▶ Afspil</button>
+          <button id="restart-btn" class="btn ghost small" title="Start forfra">↺ Forfra</button>
+          <button id="skip-btn" class="btn ghost small" title="Spol 15 sekunder frem">+15 s</button>
+          <button id="show-player-btn" class="btn ghost small">👁 Vis afspiller</button>
+          <a id="open-spotify" class="btn ghost small" target="_blank" rel="noopener">Åbn i Spotify ↗</a>
+        </div>
+        <div id="embed-wrap" class="embed-wrap covered">
+          <div id="embed-target"></div>
+          <div class="embed-cover">🎧 Afspilleren er skjult, så titlen ikke afslører svaret</div>
+        </div>
+      </div>
+
+      <h2 id="question" class="question"></h2>
+      <ol id="options" class="options"></ol>
+
+      <div class="pads">
+        <div class="pad p1">
+          <div class="pad-head"><span id="pad-name-p1"></span><span id="pad-status-p1" class="pad-status"></span></div>
+          <div class="pad-buttons" data-player="p1"></div>
+        </div>
+        <div class="pad p2">
+          <div class="pad-head"><span id="pad-name-p2"></span><span id="pad-status-p2" class="pad-status"></span></div>
+          <div class="pad-buttons" data-player="p2"></div>
+        </div>
+      </div>
+
+      <div id="reveal" class="reveal" hidden>
+        <p id="reveal-result" class="reveal-result"></p>
+        <p id="reveal-track" class="reveal-track"></p>
+        <p id="reveal-fact" class="reveal-fact"></p>
+      </div>
+
+      <div class="controls">
+        <button id="reveal-btn" class="btn primary big">Afslør svaret</button>
+        <button id="next-btn" class="btn primary big" hidden>Næste nummer →</button>
+      </div>
+      <p class="center small-links">
+        <button id="quit-btn" class="link">Afslut spil</button>
+      </p>
+    </div>
+  </section>
+
+  <!-- Resultat -->
+  <section id="result-screen" class="screen" hidden>
+    <div class="setup-card">
+      <h1 class="logo">Og vinderen er…</h1>
+      <p id="winner" class="winner"></p>
+      <div class="final-scores">
+        <div class="score-card p1"><span class="score-name" id="final-name-p1"></span><span class="score-num" id="final-score-p1"></span></div>
+        <div class="score-card p2"><span class="score-name" id="final-name-p2"></span><span class="score-num" id="final-score-p2"></span></div>
+      </div>
+      <p id="host-credit" class="hint center"></p>
+      <h2>Gennemgang</h2>
+      <div class="table-wrap">
+        <table class="recap">
+          <thead><tr><th>#</th><th>Nummer</th><th id="recap-p1"></th><th id="recap-p2"></th></tr></thead>
+          <tbody id="recap-body"></tbody>
+        </table>
+      </div>
+      <div class="setup-actions">
+        <button id="again-btn" class="btn primary big">Revanche! 🔁</button>
+        <button id="menu-btn" class="btn ghost">Nye spillere</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="duel-questions.js"></script>
+  <script src="duel.js"></script>
+</body>
+</html>
